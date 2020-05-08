@@ -1,7 +1,12 @@
 import React from 'react';
+import './test.scss'
+
+const hundle = () => {
+  console.log(1)
+}
 
 export default () => {
   return (
-    <p>test</p>
+    <button onClick={hundle} >test</button>
   )
 }

@@ -2,6 +2,7 @@ const HtmlWebPackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 const path = require('path');
 
 const isDev = process.env.NODE_ENV === 'development';
@@ -16,14 +17,17 @@ module.exports = {
 
   output: {
     filename: fileName('js'),
-    path: path.resolve(__dirname, 'build' ),
-    publicPath: isDev ? '/' : './'
+    path: path.resolve(__dirname, 'build'),
   },
+
+  devtool: isDev ? 'inline-sourcemap' : false,
 
   resolve: {
     alias: {
       '@images': path.resolve(__dirname, 'src/assets/images'),
-      '@components': path.resolve(__dirname, 'src/components/')
+      '@fonts': path.resolve(__dirname, 'src/assets/fonts'),
+      '@styles': path.resolve(__dirname, 'src/assets/styles'),
+      '@components': path.resolve(__dirname, 'src/components')
     }
   },
 
@@ -41,25 +45,18 @@ module.exports = {
       {
         test: /\.s[ac]ss$/i,
         use: [
-          {
-            loader: MiniCssExtractPlugin.loader,
-            options: {
-              publicPath: path.join(__dirname, 'build' ),
-            },
-          },
+          isDev ? 'style-loader' : { loader: MiniCssExtractPlugin.loader },
           'css-loader',
           {
             loader: 'postcss-loader',
             options: {
               plugins: [
                 require('postcss-flexbugs-fixes'),
-                require('autoprefixer')({
-                  browsers: 'last 15 version',
-                }),
+                require('autoprefixer')(),
               ]
             }
           },
-          'sass-loader',
+          'sass-loader'
         ],
       },
       {
@@ -74,11 +71,23 @@ module.exports = {
           {
             loader: 'file-loader',
             options: {
-              name: '[name].[ext]'
+              name: '[path][name].[ext]',
             }
           }
         ]
       },
+      {
+        test: /\.(woff|woff2|eot|ttf|otf)$/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              outputPath: './fonts',
+              name: '[name]/[folder]/[name].[ext]'
+            }
+          }
+        ]
+      }
     ]
   },
 
@@ -104,8 +113,14 @@ module.exports = {
     }),
     new MiniCssExtractPlugin({
       filename: fileName('css'),
-      chunkFilename: isDev ? `[id].css` : `[id][chunkhash].css`,
+      chunkFilename: isDev ? `[id].css` : `[id][hash].css`,
     }),
+    // new CopyPlugin([
+    //   {
+    //     from: path.resolve(__dirname, 'src/assets/fonts'),
+    //     to: path.resolve(__dirname, 'build/fonts')
+    //   }
+    // ]),
   ],
 
   devServer: {

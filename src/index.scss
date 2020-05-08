@@ -1,13 +1,16 @@
-//@font-face {
-//  font-display: swap;
-//  font-family: 'Montserrat';
-//  src: url("assets/fonts/Montserrat/Bold/Montserrat-Bold.woff2") format('woff2'),
-//  url("assets/fonts/Montserrat/Bold/Montserrat-Bold.woff") format('woff');
-//  font-weight: 700;
-//  font-style: normal;
-//}
+@import '~@fonts/index';
+@import '~@styles/mixins.scss';
+
 p {
-  width: 500px;
-  height: 500px;
-  background: url('./assets/images/flying-saucer-img.png');
+  @include hoveredOpacity(1,.5);
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+}
+
+.image {
+  background-image: url('~@images/icon/flying-saucer-img.png');
+}
+
+button {
+  opacity: .4;
 }
