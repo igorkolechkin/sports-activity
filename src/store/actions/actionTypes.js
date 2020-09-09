@@ -1,0 +1,1 @@
+export const SHOW_HEADER = 'SHOW_HEADER';

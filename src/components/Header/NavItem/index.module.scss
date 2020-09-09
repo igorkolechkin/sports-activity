@@ -1,0 +1,27 @@
+.nav__item {
+  font-size: 18px;
+  cursor: pointer;
+  position: relative;
+
+  &:not(:last-child) {
+    margin-bottom: 15px;
+  }
+
+  &:after {
+    content: '';
+    position: absolute;
+    bottom: -3px;
+    left: 50%;
+    width: 0;
+    height: 1px;
+    background-color: #333333;
+    transform: translateX(-50%);
+    transition: width .3s;
+  }
+
+  &:hover:after {
+    width: 100%;
+  }
+}
+
+
