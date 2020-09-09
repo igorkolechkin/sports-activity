@@ -1,0 +1,21 @@
+@import '~normalize.css';
+
+button {
+  padding: 0;
+  background-color: transparent;
+  outline: none;
+  border: none
+}
+
+.app-wrapper {
+  position: relative;
+  background: blue;
+  min-height: 100vh;
+}
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  padding: 0 30px;
+  margin: 0 auto;
+}
