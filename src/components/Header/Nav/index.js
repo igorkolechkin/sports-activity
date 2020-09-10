@@ -3,20 +3,12 @@ import NavItem from '@components/Header/NavItem';
 import styles from './index.module.scss'
 
 const Nav = props => {
-  const navClasses = [
-    styles.nav,
-    props.showMenu ? styles.open : null
-  ];
-
-  const navItems = [
-    {id: 0, content: 'Profile'},
-    {id: 1, content: 'Users'}
-  ]
-
   return (
-    <nav className={ navClasses.join(' ') }>
+    <nav className={ styles.nav }>
       <ul>
-        { navItems.map(item => <NavItem key={ item.id } content={ item.content } />) }
+        { props.navItems.map(item => {
+          return <NavItem key={ item.id } content={ item.content } href={ item.href } exact={ item.exact } />
+        }) }
       </ul>
     </nav>
   )

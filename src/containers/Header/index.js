@@ -1,36 +1,44 @@
 import React from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { toggleHeaderHandler } from '@store/actions/headerAction';
 import Nav from '@components/Header/Nav';
 import Burger from '@components/Header/Burger';
 import styles from './index.module.scss';
 
-class Header extends React.Component {
-  constructor(props) {
-    super(props);
+const Header = props => {
+  const isHeader = props.store.headerReducer.isShow;
 
-    this.state = {
-      showHeader: false
-    }
-  }
+  const navItems = [
+    {id: 0, content: 'Profile', href: '/', exact: true},
+    {id: 1, content: 'Users', href: '/users', exact: false},
+    {id: 2, content: 'Message', href: '/message', exact: false},
+    {id: 3, content: 'Activities', href: '/activities', exact: false},
+  ]
 
-  onToggleHeaderHandler = () => {
-    this.setState({showHeader: !this.state.showHeader})
-  }
+  return (
+    <header className={ `${styles.header} ${ isHeader ? styles.show : ''}` }>
+      <div className={ styles.header__content }>
+        <div className={ styles.header__title }>Navigation</div>
+        <Nav navItems={ navItems } />
+      </div>
 
-  render() {
-    return (
-      <header className={ `${styles.header} ${ this.state.showHeader ? styles.show : ''}` }>
-        <div className={ styles.header__content }>
-          <div className={ styles.header__title }>Navigation</div>
-          <Nav  />
-        </div>
+      <Burger
+        showHeader={ isHeader }
+        onToggleHeader={ props.toggleHeaderHandler }
+      />
+    </header>
+  )
+}
 
-        <Burger
-          showHeader={ this.state.showHeader }
-          onToggleHeader={ this.onToggleHeaderHandler }
-        />
-      </header>
-    )
+const mapStateToProps = state => {
+  return {
+    store: state
   }
 }
 
-export default Header;
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators({toggleHeaderHandler}, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

@@ -7,10 +7,17 @@ button {
   border: none
 }
 
+ul {
+  padding: 0;
+  list-style: none;
+}
+
 .app-wrapper {
   position: relative;
   background: blue;
   min-height: 100vh;
+  display: flex;
+  color: #333333;
 }
 
 .container {
@@ -18,4 +25,10 @@ button {
   max-width: 1200px;
   padding: 0 30px;
   margin: 0 auto;
+}
+
+.page-title {
+  flex-basis: 100%;
+  text-align: center;
+  margin: 0 0 20px;
 }

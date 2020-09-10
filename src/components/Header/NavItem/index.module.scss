@@ -1,11 +1,14 @@
-.nav__item {
-  font-size: 18px;
-  cursor: pointer;
-  position: relative;
-
+.item {
   &:not(:last-child) {
     margin-bottom: 15px;
   }
+}
+
+.link {
+  font-size: 18px;
+  color: #333333;
+  position: relative;
+  text-decoration: none;
 
   &:after {
     content: '';
@@ -24,4 +27,8 @@
   }
 }
 
-
+.active {
+  &:after {
+    width: 100%;
+  }
+}
