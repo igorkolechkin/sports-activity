@@ -1,1 +1,2 @@
 export const SHOW_HEADER = 'SHOW_HEADER';
+export const SELECT_USER_MESSAGE = 'SELECT_USER_MESSAGE';

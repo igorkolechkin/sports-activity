@@ -1,0 +1,9 @@
+.item {
+  font-size: 19px;
+  line-height: 1;
+  cursor: pointer;
+
+  &:not(:last-child) {
+    margin-bottom: 15px;
+  }
+}

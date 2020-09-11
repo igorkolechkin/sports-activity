@@ -1,17 +1,27 @@
 import React from 'react';
-import styles from './index.module.scss';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { toggleHeaderHandler } from '@store/actions/headerAction';
 import { NavLink  } from 'react-router-dom';
+import styles from './index.module.scss';
 
 const NavItem = props => {
+  const { exact, href, content } = props.data;
+
   return (
     <li className={ styles.item }>
-      <NavLink exact={ props.exact }
-               to={ props.href }
+      <NavLink exact={ exact }
+               to={ href }
                className={ styles.link }
                activeClassName={ styles.active }
-      >{ props.content }</NavLink>
+               onClick={ props.toggleHeaderHandler }
+      >{ content }</NavLink>
     </li>
   )
 }
 
-export default NavItem;
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators({toggleHeaderHandler}, dispatch);
+}
+
+export default connect(null, mapDispatchToProps)(NavItem);

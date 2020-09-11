@@ -1,0 +1,25 @@
+.btn {
+  background-color: #2884f6;
+  padding: 8px 12px;
+  border: 1px solid #fff;
+  border-radius: 3px;
+  color: #fff;
+  display: inline-block;
+  cursor: pointer;
+  transition: opacity .3s, box-shadow .1s;
+  outline: none;
+
+  &:not(:disabled):hover {
+    opacity: .7;
+  }
+
+  &:active {
+    box-shadow: inset 2px 2px 1px rgba(0, 0, 0, .3);
+  }
+
+  &:disabled {
+    background: #4ac4c6;
+    cursor: not-allowed;
+  }
+}
+

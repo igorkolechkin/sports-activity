@@ -7,24 +7,15 @@ import Burger from '@components/Header/Burger';
 import styles from './index.module.scss';
 
 const Header = props => {
-  const isHeader = props.store.headerReducer.isShow;
-
-  const navItems = [
-    {id: 0, content: 'Profile', href: '/', exact: true},
-    {id: 1, content: 'Users', href: '/users', exact: false},
-    {id: 2, content: 'Message', href: '/message', exact: false},
-    {id: 3, content: 'Activities', href: '/activities', exact: false},
-  ]
-
   return (
-    <header className={ `${styles.header} ${ isHeader ? styles.show : ''}` }>
+    <header className={ `${styles.header} ${ props.isHeaderShow ? styles.show : ''}` }>
       <div className={ styles.header__content }>
         <div className={ styles.header__title }>Navigation</div>
-        <Nav navItems={ navItems } />
+        <Nav navItems={ props.navItems } />
       </div>
 
       <Burger
-        showHeader={ isHeader }
+        showHeader={ props.isHeaderShow }
         onToggleHeader={ props.toggleHeaderHandler }
       />
     </header>
@@ -33,7 +24,8 @@ const Header = props => {
 
 const mapStateToProps = state => {
   return {
-    store: state
+    isHeaderShow: state.headerReducer.isHeaderShow,
+    navItems: state.headerReducer.navigation
   }
 }
 
