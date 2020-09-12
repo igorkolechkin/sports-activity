@@ -9,7 +9,6 @@ const UsersNav = props => {
         return <UsersNavItem key={ user.id }
                              id={ user.id }
                              name={ user.name }
-                             selected={ user.selected }
                              onCheckUser={ props.onCheckUser } />
       }) }
     </ul>

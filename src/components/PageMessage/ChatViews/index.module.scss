@@ -10,3 +10,13 @@
 .preview {
   margin: auto;
 }
+
+.item {
+  &:not(:last-child) {
+    margin-bottom: 15px;
+  }
+}
+
+.right {
+  text-align: right;
+}
