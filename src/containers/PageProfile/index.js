@@ -2,7 +2,7 @@ import React from 'react';
 
 const PageProfile = props => {
   return (
-    <h1>Page Profile</h1>
+    <h1 className='page-title'>Page Profile</h1>
   )
 }
 
