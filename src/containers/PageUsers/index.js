@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import { addUsers } from '@store/actions/usersAction';
 import UsersListItem from '@components/PageUsers/UsersListItem';
 import Loader from '@components/UI/Loader';
+import Pagination from '@components/UI/Pagination';
 import styles from './index.module.scss';
 
 class PageFriends extends React.Component {
@@ -12,6 +13,12 @@ class PageFriends extends React.Component {
   }
 
   render() {
+    let pages = [];
+
+    for (let i = 1; i <= this.props.pageCount; i++) {
+      if (i <= 10) pages.push({ id: `usersPage${i}`, name: i });
+    }
+
     return (
       <>
         <h1 className='page-title'>{ this.props.pageTitle }</h1>
@@ -27,6 +34,10 @@ class PageFriends extends React.Component {
               : <Loader />
           }
         </div>
+
+        <div className={ styles.nav }>
+          <Pagination pages={ pages } />
+        </div>
       </>
     )
   }
@@ -35,7 +46,8 @@ class PageFriends extends React.Component {
 const mapStateToProps = props => {
   return {
     loaded: props.usersReducer.loaded,
-    users: props.usersReducer.users
+    users: props.usersReducer.users,
+    pageCount: props.usersReducer.totalCount / props.usersReducer.usersCount
   }
 }
 
