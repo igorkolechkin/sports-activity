@@ -2,7 +2,9 @@ import { ADD_FRIENDS } from '@store/actions/actionTypes';
 
 const initialState = {
   loaded: false,
-  users: []
+  users: [],
+  currentPage: 1,
+  count: 10
 };
 
 export default (state = initialState, action) => {

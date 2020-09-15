@@ -1,7 +1,13 @@
-.item {
+.item-wrapper {
   flex: 0 0 25%;
   margin-bottom: 40px;
+  padding: 0 20px;
+}
+
+.item {
   padding: 15px 20px;
+  box-shadow: 0 0 1px;
+  cursor: pointer;
   transition: box-shadow .3s;
 
   &:hover {
@@ -9,8 +15,19 @@
   }
 }
 
+.image-wrapper {
+  width: 210px;
+  height: 210px;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+}
+
 .image {
-  width: 100%;
+  max-width: 100%;
 }
 
 .name {

@@ -1,14 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { addFriends } from '@store/actions/friendsAction';
-import FriendListItem from '@components/PageFriend/FriendListItem';
+import { addUsers } from '@store/actions/usersAction';
+import UsersListItem from '@components/PageUsers/UsersListItem';
 import Loader from '@components/UI/Loader';
 import styles from './index.module.scss';
 
 class PageFriends extends React.Component {
   componentDidMount() {
-    this.props.addFriends();
+    this.props.addUsers();
   }
 
   render() {
@@ -20,8 +20,8 @@ class PageFriends extends React.Component {
           {
             this.props.loaded
               ? <ul className={ styles.list }>
-                { this.props.friends.map(friend =>  {
-                  return <FriendListItem key={ friend.id } name={ friend.name } imgUrl={ friend.photos.large } />
+                { this.props.users.map(user =>  {
+                  return <UsersListItem key={ user.id } name={ user.name } imgUrl={ user.photos.large } followed={ user.followed } />
                 } )}
               </ul>
               : <Loader />
@@ -34,15 +34,13 @@ class PageFriends extends React.Component {
 
 const mapStateToProps = props => {
   return {
-    loaded: props.friendsReducer.loaded,
-    friends: props.friendsReducer.users
+    loaded: props.usersReducer.loaded,
+    users: props.usersReducer.users
   }
 }
 
 const mapDispatchToProps = dispatch => {
-  return bindActionCreators({
-    addFriends
-  }, dispatch);
+  return bindActionCreators({ addUsers }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(PageFriends);
