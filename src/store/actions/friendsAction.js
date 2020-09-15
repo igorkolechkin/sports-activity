@@ -1,13 +1,13 @@
 import { ADD_FRIENDS } from '@store/actions/actionTypes';
-import { _axios } from '@services/requests';
+import { samuraiApi } from '@services/requests';
 
 export const addFriends = () => {
   return async dispatch => {
     try {
-      const users = await _axios.get('users');
-      dispatch({ type: ADD_FRIENDS, payload: users.data })
+      const users = await samuraiApi.get('users?page=2');
+      dispatch({ type: ADD_FRIENDS, payload: { users: users.data.items, loaded: true } })
     } catch (e) {
-      console.log(e)
+
     }
   }
 }
