@@ -10,7 +10,7 @@ const MainContent = props => {
     <main className={ styles.content }>
       <Switch>
         <Route path='/message' render={ () => <PageMessage pageTitle='Messages' /> } />
-        <Route path='/users' exact render={ () =>  <PageUsers pageTitle='Friends' /> } />
+        <Route path='/users' exact render={ () =>  <PageUsers pageTitle='Users' /> } />
         <Route path='/' exact render={ () =>  <PageProfile pageTitle='My Profile' /> } />
       </Switch>
     </main>
