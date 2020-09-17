@@ -1,7 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { setUsers, setCurrentUsersPage, setUsersTotalCount } from '@store/actions/usersAction';
+import { setUsers, setCurrentUsersPage, setUsersTotalCount, togglePreloader } from '@store/actions/usersAction';
+import { samuraiApi } from '@services/requests';
 import UsersListItem from '@components/PageUsers/UsersListItem';
 import Loader from '@components/UI/Loader';
 import Pagination from '@components/UI/Pagination';
@@ -9,22 +10,38 @@ import styles from './index.module.scss';
 
 class PageFriends extends React.Component {
   componentDidMount() {
-    this.props.setUsersTotalCount();
+    this.totalCountFetch();
+    this.usersFetch();
+  }
 
-    this.props.setUsers({
-      currentPage: this.props.currentPage,
-      usersCount: this.props.usersCount
-    });
+  async totalCountFetch() {
+    try {
+      const users = await samuraiApi.get('users');
+      this.props.setUsersTotalCount(users.data.totalCount);
+    } catch (e) {
+
+    }
+  }
+
+  async usersFetch(currentPage) {
+    const page = currentPage || this.props.currentPage
+
+    this.props.togglePreloader(true);
+
+    try {
+      const users = await samuraiApi.get(`users?page=${ page }&count=${ this.props.usersCount }`);
+      this.props.setUsers({ users: users.data.items });
+      this.props.togglePreloader(false);
+    } catch (e) {
+
+    }
   }
 
   paginationItemHandler = (item) => {
     const currentPage = parseInt(item.innerText);
 
     this.props.setCurrentUsersPage(currentPage);
-    this.props.setUsers({
-      currentPage: currentPage,
-      usersCount: this.props.usersCount
-    })
+    this.usersFetch(currentPage);
   }
 
   renderPagination() {
@@ -45,12 +62,12 @@ class PageFriends extends React.Component {
         <div className={ styles.content }>
           {
             this.props.loaded
-              ? <ul className={ styles.list }>
+              ? <Loader />
+              : <ul className={ styles.list }>
                 { this.props.users.map(user =>  {
                   return <UsersListItem key={ user.id } name={ user.name } imgUrl={ user.photos.large } followed={ user.followed } />
                 } )}
               </ul>
-              : <Loader />
           }
         </div>
 
@@ -78,4 +95,6 @@ const mapDispatchToProps = dispatch => {
   }, dispatch);
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(PageFriends);
+export default connect(mapStateToProps, {
+  setUsers, setCurrentUsersPage, setUsersTotalCount, togglePreloader
+})(PageFriends);
