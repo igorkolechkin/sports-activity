@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import { setUsers, setCurrentUsersPage, setUsersTotalCount, togglePreloader } from '@store/actions/usersAction';
 import { samuraiApi } from '@services/requests';
 import UsersListItem from '@components/PageUsers/UsersListItem';
@@ -87,12 +86,6 @@ const mapStateToProps = props => {
     usersCount: props.usersReducer.usersCount,
     pageCount: props.usersReducer.totalCount / props.usersReducer.usersCount
   }
-}
-
-const mapDispatchToProps = dispatch => {
-  return bindActionCreators({
-    setUsers, setCurrentUsersPage, setUsersTotalCount
-  }, dispatch);
 }
 
 export default connect(mapStateToProps, {

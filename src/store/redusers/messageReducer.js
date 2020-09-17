@@ -54,7 +54,7 @@ export default (state = initialState, action) => {
     case ADD_NEW_MESSAGE:
       if (state.currentMessageText === '') return state;
       else {
-        const updateUserObject = JSON.parse+(JSON.stringify(state.users[state.selectedUser]));
+        const updateUserObject = JSON.parse(JSON.stringify(state.users[state.selectedUser]));
         updateUserObject.message.push({ isMy: true, text: state.currentMessageText });
 
         const newUsers = [...state.users]

@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import UsersNav from '@components/PageMessage/UsersNav';
 import MessageArea from '@components/PageMessage/MessageArea';
 import { selectUserToMessage, writeNewMessage, addNewMessage } from '@store/actions/messageAction';
@@ -33,10 +32,6 @@ const mapStateToProps = props => {
   }
 }
 
-const mapDispatchToProps = dispatch => {
-  return bindActionCreators({
-    selectUserToMessage, writeNewMessage, addNewMessage
-  }, dispatch);
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(PageMessage);
+export default connect(mapStateToProps, {
+  selectUserToMessage, writeNewMessage, addNewMessage
+})(PageMessage);
