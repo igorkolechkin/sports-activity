@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { setUsers, setCurrentUsersPage, setUsersTotalCount, togglePreloader } from '@store/actions/usersAction';
 import { samuraiApi } from '@services/requests';
-import UsersListItem from '@components/PageUsers/UsersListItem';
+import UsersList from '@components/PageUsers/UsersList';
 import Loader from '@components/UI/Loader';
 import Pagination from '@components/UI/Pagination';
 import styles from './index.module.scss';
@@ -62,11 +62,7 @@ class PageFriends extends React.Component {
           {
             this.props.loaded
               ? <Loader />
-              : <ul className={ styles.list }>
-                { this.props.users.map(user =>  {
-                  return <UsersListItem key={ user.id } name={ user.name } imgUrl={ user.photos.large } followed={ user.followed } />
-                } )}
-              </ul>
+              : <UsersList users={ this.props.users } />
           }
         </div>
 

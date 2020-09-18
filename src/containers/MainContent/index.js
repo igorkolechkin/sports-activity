@@ -9,9 +9,9 @@ const MainContent = props => {
   return (
     <main className={ styles.content }>
       <Switch>
-        <Route path='/message' render={ () => <PageMessage pageTitle='Messages' /> } />
+        <Route path='/profile' render={ () =>  <PageProfile pageTitle='My Profile' /> } />
         <Route path='/users' exact render={ () =>  <PageUsers pageTitle='Users' /> } />
-        <Route path='/' exact render={ () =>  <PageProfile pageTitle='My Profile' /> } />
+        <Route path='/message' render={ () => <PageMessage pageTitle='Messages' /> } />
       </Switch>
     </main>
   )
