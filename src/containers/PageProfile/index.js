@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import { samuraiApi } from '@services/requests';
 import Profile from '@components/PageProfile/Profile';
 import { setUserProfile } from '@store/actions/profileAction';
@@ -9,9 +10,15 @@ class PageProfile extends React.Component {
     this.profileFetch();
   }
 
-  async profileFetch() {
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (this.props.match.params.id !== prevProps.match.params.id) {
+      this.profileFetch();
+    }
+  }
+
+  async profileFetch(id) {
     try {
-      const users = await samuraiApi.get(`profile/${11560}`);
+      const users = await samuraiApi.get(`profile/${ this.props.match.params.id || 2 }`);
       this.props.setUserProfile(users.data)
     } catch (e) {
 
@@ -31,10 +38,11 @@ class PageProfile extends React.Component {
 
 const mapStateToProps = props => {
   return {
-    info: props.profileReducer
+    info: props.profileReducer,
+    // userId: this.props.match.params.id || 2
   }
 }
 
 export default connect(mapStateToProps, {
   setUserProfile
-})(PageProfile);
+})(withRouter(PageProfile));

@@ -16,8 +16,7 @@
 }
 
 .imageWrapper {
-  width: 210px;
-  height: 210px;
+  max-width: 210px;
   border-radius: 50%;
   overflow: hidden;
   display: flex;
