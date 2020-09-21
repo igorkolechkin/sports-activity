@@ -1,5 +1,5 @@
 import { SET_USERS, SET_CURRENT_USERS_PAGE, SET_USERS_TOTAL_COUNT,
-  TOGGLE_PRELOADER } from '@store/actions/actionTypes';
+  TOGGLE_PRELOADER, TOGGLE_FOLLOW_USER } from '@store/actions/actionTypes';
 
 const initialState = {
   loaded: false,
@@ -17,7 +17,7 @@ export default (state = initialState, action) => {
     case SET_USERS:
       return {
         ...state,
-        users: action.payload.users
+        users: action.payload
        }
 
     case SET_CURRENT_USERS_PAGE:
@@ -28,6 +28,14 @@ export default (state = initialState, action) => {
 
     case TOGGLE_PRELOADER:
       return { ...state, loaded: action.payload }
+
+    case TOGGLE_FOLLOW_USER:
+      return  {
+        ...state,
+        users: state.users.map(user => {
+          return user.id === action.payload ? { ...user, followed: !user.followed } : user;
+        })
+      }
 
     default:
       return state

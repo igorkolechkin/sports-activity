@@ -9,19 +9,24 @@ const UsersListItem = props => {
     <li className={ styles['item-wrapper'] }>
       <div className={ styles.item }>
 
-        <NavLink to={ `profile/${props.href}` }
+        <NavLink to={ `profile/${ props.id }` }
                  className={ styles.imageWrapper }
         >
           <Image src={ props.imgUrl || '/unknown-user.png' }
-                 className={ 'img-fluid' }
+                 className={ styles.image }
                  alt={ `${props.name} logo` }
+                 width={ 200 }
+                 height={ 200 }
           />
         </NavLink>
 
         <div className={ styles.name }>{ props.name }</div>
 
         <div className={ styles['button-wrapper'] }>
-          <Button>Followed</Button>
+          <Button onClick={ () => props.toggleFollowUserHandler(props.id, props.followed) }>
+            { props.followed ? 'Unsubscribe' : 'Subscribe' }
+          </Button>
+
           <Button>Send</Button>
         </div>
       </div>

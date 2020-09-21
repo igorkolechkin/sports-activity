@@ -16,13 +16,13 @@
 }
 
 .imageWrapper {
-  max-width: 210px;
+  display: block;
+  text-align: center;
+}
+
+.image {
+  object-fit: cover;
   border-radius: 50%;
-  overflow: hidden;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 0 auto;
 }
 
 .name {

@@ -1,7 +1,5 @@
-import { SHOW_HEADER } from '@store/actions/actionTypes';
+import { SHOW_HEADER, USER_LOGGED } from '@store/actions/actionTypes';
 
-export const toggleHeaderHandler = () => {
-  return dispatch => {
-    dispatch({ type: SHOW_HEADER })
-  }
-}
+export const toggleHeaderHandler = () => ({ type: SHOW_HEADER });
+
+export const userLogged = (data, isLogged) => ({ type: USER_LOGGED, payload: { data, isLogged } });

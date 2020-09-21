@@ -1,12 +1,12 @@
 import React from 'react';
 
 const Image = props => {
+  const { className, alt, ...attrs } = props;
+
   return (
-    <img src={ props.src }
-         alt={ props.alt }
-         className={ typeof props.className === 'string' ? props.className : props.className.join(' ') }
-         { ...props.attrs }
-    />
+    <img { ...attrs }
+         alt={ alt || 'image' }
+         className={ typeof className === 'string' ? className : className.join(' ') } />
   )
 }
 

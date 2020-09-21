@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { setUsers, setCurrentUsersPage, setUsersTotalCount, togglePreloader } from '@store/actions/usersAction';
+import { setUsers, setCurrentUsersPage, setUsersTotalCount, togglePreloader,
+  toggleFollowUser } from '@store/actions/usersAction';
 import { samuraiApi } from '@services/requests';
 import UsersList from '@components/PageUsers/UsersList';
 import Loader from '@components/UI/Loader';
@@ -15,7 +16,7 @@ class PageFriends extends React.Component {
 
   async totalCountFetch() {
     try {
-      const users = await samuraiApi.get('users');
+      const users = await samuraiApi.getUsers(1, this.props.usersCount);
       this.props.setUsersTotalCount(users.data.totalCount);
     } catch (e) {
 
@@ -23,20 +24,20 @@ class PageFriends extends React.Component {
   }
 
   async usersFetch(currentPage) {
-    const page = currentPage || this.props.currentPage
-
-    this.props.togglePreloader(true);
-
     try {
-      const users = await samuraiApi.get(`users?page=${ page }&count=${ this.props.usersCount }`);
-      this.props.setUsers({ users: users.data.items });
+      const page = currentPage || this.props.currentPage
+      this.props.togglePreloader(true);
+
+      const users = await samuraiApi.getUsers(page, this.props.usersCount);
+      this.props.setUsers(users.data.items);
+
       this.props.togglePreloader(false);
     } catch (e) {
 
     }
   }
 
-  paginationItemHandler = (item) => {
+  paginationItemHandler = item => {
     const currentPage = parseInt(item.innerText);
 
     this.props.setCurrentUsersPage(currentPage);
@@ -53,6 +54,17 @@ class PageFriends extends React.Component {
     return <Pagination pages={ pages } clickHandler={ this.paginationItemHandler } />
   }
 
+  toggleFollowUserHandler = async (id, isSubscribe) => {
+    try {
+      if (isSubscribe) await samuraiApi.unsubscribe(id);
+      else await samuraiApi.subscribe(id);
+
+      this.props.toggleFollowUser(id)
+    } catch (e) {
+
+    }
+  }
+
   render() {
     return (
       <>
@@ -62,7 +74,9 @@ class PageFriends extends React.Component {
           {
             this.props.loaded
               ? <Loader />
-              : <UsersList users={ this.props.users } />
+              : <UsersList users={ this.props.users }
+                           toggleFollowUserHandler={ this.toggleFollowUserHandler }
+                />
           }
         </div>
 
@@ -85,5 +99,5 @@ const mapStateToProps = props => {
 }
 
 export default connect(mapStateToProps, {
-  setUsers, setCurrentUsersPage, setUsersTotalCount, togglePreloader
+  setUsers, setCurrentUsersPage, setUsersTotalCount, togglePreloader, toggleFollowUser
 })(PageFriends);

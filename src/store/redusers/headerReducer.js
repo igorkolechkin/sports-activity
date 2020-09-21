@@ -1,7 +1,9 @@
-import { SHOW_HEADER } from '@store/actions/actionTypes';
+import { SHOW_HEADER, USER_LOGGED } from '@store/actions/actionTypes';
 
 const initialState = {
   isHeaderShow: false,
+  userDetails: null,
+  isLogged: false,
   navigation: [
     {id: 0, content: 'Profile', href: '/profile', exact: true},
     {id: 1, content: 'Users', href: '/users', exact: false},
@@ -15,7 +17,14 @@ export default (state = initialState, action) => {
     case SHOW_HEADER:
       return { ...state, isHeaderShow: !state.isHeaderShow };
 
+    case USER_LOGGED:
+      return {
+        ...state,
+        userDetails: { ...action.payload.data },
+        isLogged: !action.payload.isLogged
+      };
+
     default:
-      return state
+      return state;
   }
 }

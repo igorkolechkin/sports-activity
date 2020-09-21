@@ -1,36 +1,74 @@
 import React from 'react';
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { toggleHeaderHandler } from '@store/actions/headerAction';
+import { NavLink } from 'react-router-dom';
+import { samuraiApi } from '@services/requests';
+import { toggleHeaderHandler, userLogged } from '@store/actions/headerAction';
 import Nav from '@components/Header/Nav';
 import Burger from '@components/Header/Burger';
+import HeaderProfile from '@components/Header/HeaderProfile';
+import Button from '@components/UI/Button';
 import styles from './index.module.scss';
 
-const Header = props => {
-  return (
-    <header className={ `${styles.header} ${ props.isHeaderShow ? styles.show : ''}` }>
-      <div className={ styles.header__content }>
-        <div className={ styles.header__title }>Navigation</div>
-        <Nav navItems={ props.navItems } />
-      </div>
+class Header extends React.Component {
+  componentDidMount() {
+    this.checkUserLogged();
+  }
+  
+  async checkUserLogged() {
+    if (!this.props.isLogged) {
+      const authAnswer = await samuraiApi.authMe();
 
-      <Burger
-        showHeader={ props.isHeaderShow }
-        onToggleHeader={ props.toggleHeaderHandler }
-      />
-    </header>
-  )
+      try {
+        this.props.userLogged(
+          {
+            email: authAnswer.data.data.email,
+            id: authAnswer.data.data.id,
+            login: authAnswer.data.data.login
+          },
+          authAnswer.data.resultCode
+        )
+      } catch (e) {
+
+      }
+    }
+  }
+
+  render() {
+    return (
+      <header className={ `${styles.header} ${ this.props.isHeaderShow ? styles.show : ''}` }>
+        <div className={ styles.header__content }>
+          <div className={ styles.header__title }>Navigation</div>
+
+          {
+            this.props.isLogged
+              ? <>
+                <HeaderProfile data={ this.props.userDetails } />
+                <Nav navItems={ this.props.navItems } />
+              </>
+              : <Button classes={ styles.loginBtn }>
+                <NavLink to={'/login'}>Login</NavLink>
+              </Button>
+          }
+        </div>
+
+        <Burger
+          showHeader={ this.props.isHeaderShow }
+          onToggleHeader={ this.props.toggleHeaderHandler }
+        />
+      </header>
+    )
+  }
 }
 
 const mapStateToProps = state => {
   return {
     isHeaderShow: state.headerReducer.isHeaderShow,
-    navItems: state.headerReducer.navigation
+    navItems: state.headerReducer.navigation,
+    isLogged: state.headerReducer.isLogged,
+    userDetails: state.headerReducer.userDetails
   }
 }
 
-const mapDispatchToProps = dispatch => {
-  return bindActionCreators({toggleHeaderHandler}, dispatch);
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Header);
+export default connect(mapStateToProps, {
+  toggleHeaderHandler, userLogged
+})(Header);

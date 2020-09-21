@@ -18,7 +18,7 @@ class PageProfile extends React.Component {
 
   async profileFetch(id) {
     try {
-      const users = await samuraiApi.get(`profile/${ this.props.match.params.id || 2 }`);
+      const users = await samuraiApi.getUser(this.props.match.params.id || 11598);
       this.props.setUserProfile(users.data)
     } catch (e) {
 
@@ -38,8 +38,7 @@ class PageProfile extends React.Component {
 
 const mapStateToProps = props => {
   return {
-    info: props.profileReducer,
-    // userId: this.props.match.params.id || 2
+    info: props.profileReducer
   }
 }
 

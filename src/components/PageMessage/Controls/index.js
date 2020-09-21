@@ -9,7 +9,7 @@ const Controls = props => {
                 onChange={ e => props.writeNewMessage(e.target.value) }
                 className={ styles.text } name="text" id="" />
 
-      <Button clases={ styles.btn } onClick={ props.addNewMessage }>Send</Button>
+      <Button classes={ styles.btn } onClick={ props.addNewMessage }>Send</Button>
     </div>
   )
 }
