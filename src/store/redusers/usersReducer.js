@@ -1,12 +1,13 @@
 import { SET_USERS, SET_CURRENT_USERS_PAGE, SET_USERS_TOTAL_COUNT,
-  TOGGLE_PRELOADER, TOGGLE_FOLLOW_USER } from '@store/actions/actionTypes';
+  TOGGLE_PRELOADER, TOGGLE_FOLLOW_USER, TOGGLE_FOLLOW_USER_PROGRESS } from '@store/actions/actionTypes';
 
 const initialState = {
   loaded: false,
   users: [],
   currentPage: 1,
   usersCount: 4,
-  totalCount: ''
+  totalCount: '',
+  followingUsersList: []
 };
 
 export default (state = initialState, action) => {
@@ -35,6 +36,15 @@ export default (state = initialState, action) => {
         users: state.users.map(user => {
           return user.id === action.payload ? { ...user, followed: !user.followed } : user;
         })
+      }
+
+    case TOGGLE_FOLLOW_USER_PROGRESS:
+      //console.log(action.payload)
+      return {
+        ...state,
+        followingUsersList: action.payload.status
+          ? [ ...state.followingUsersList, action.payload.id ]
+          : state.followingUsersList.filter(elem => elem !== action.payload.id)
       }
 
     default:

@@ -23,7 +23,8 @@ const UsersListItem = props => {
         <div className={ styles.name }>{ props.name }</div>
 
         <div className={ styles['button-wrapper'] }>
-          <Button onClick={ () => props.toggleFollowUserHandler(props.id, props.followed) }>
+          <Button disabled={ props.inFollowProgress }
+                  onClick={ () => props.toggleFollowUserHandler(props.id, props.followed) }>
             { props.followed ? 'Unsubscribe' : 'Subscribe' }
           </Button>
 

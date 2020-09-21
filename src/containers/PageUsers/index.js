@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { setUsers, setCurrentUsersPage, setUsersTotalCount, togglePreloader,
-  toggleFollowUser } from '@store/actions/usersAction';
+  toggleFollowUser, toggleFollowUserProgress } from '@store/actions/usersAction';
 import { samuraiApi } from '@services/requests';
 import UsersList from '@components/PageUsers/UsersList';
 import Loader from '@components/UI/Loader';
@@ -56,8 +56,12 @@ class PageFriends extends React.Component {
 
   toggleFollowUserHandler = async (id, isSubscribe) => {
     try {
+      this.props.toggleFollowUserProgress(true, id);
+
       if (isSubscribe) await samuraiApi.unsubscribe(id);
       else await samuraiApi.subscribe(id);
+
+      this.props.toggleFollowUserProgress(false, id);
 
       this.props.toggleFollowUser(id)
     } catch (e) {
@@ -75,6 +79,7 @@ class PageFriends extends React.Component {
             this.props.loaded
               ? <Loader />
               : <UsersList users={ this.props.users }
+                           followingUsersList={ this.props.followingUsersList }
                            toggleFollowUserHandler={ this.toggleFollowUserHandler }
                 />
           }
@@ -94,10 +99,11 @@ const mapStateToProps = props => {
     users: props.usersReducer.users,
     currentPage: props.usersReducer.currentPage,
     usersCount: props.usersReducer.usersCount,
-    pageCount: props.usersReducer.totalCount / props.usersReducer.usersCount
+    pageCount: props.usersReducer.totalCount / props.usersReducer.usersCount,
+    followingUsersList: props.usersReducer.followingUsersList
   }
 }
 
 export default connect(mapStateToProps, {
-  setUsers, setCurrentUsersPage, setUsersTotalCount, togglePreloader, toggleFollowUser
+  setUsers, setCurrentUsersPage, setUsersTotalCount, togglePreloader, toggleFollowUser, toggleFollowUserProgress
 })(PageFriends);

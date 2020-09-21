@@ -11,6 +11,7 @@ const UsersList = props => {
                               name={ user.name }
                               imgUrl={ user.photos.small }
                               followed={ user.followed }
+                              inFollowProgress={ props.followingUsersList.some(elem => elem === user.id) }
                               toggleFollowUserHandler={ props.toggleFollowUserHandler }
         />
       } )}
