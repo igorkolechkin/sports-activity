@@ -39,7 +39,6 @@ export default (state = initialState, action) => {
       }
 
     case TOGGLE_FOLLOW_USER_PROGRESS:
-      //console.log(action.payload)
       return {
         ...state,
         followingUsersList: action.payload.status

@@ -1,8 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
-import { samuraiApi } from '@services/requests';
-import { toggleHeaderHandler, userLogged } from '@store/actions/headerAction';
+import { toggleHeaderHandler, userLoggedThunk } from '@store/actions/headerAction';
 import Nav from '@components/Header/Nav';
 import Burger from '@components/Header/Burger';
 import HeaderProfile from '@components/Header/HeaderProfile';
@@ -11,26 +10,7 @@ import styles from './index.module.scss';
 
 class Header extends React.Component {
   componentDidMount() {
-    this.checkUserLogged();
-  }
-  
-  async checkUserLogged() {
-    if (!this.props.isLogged) {
-      const authAnswer = await samuraiApi.authMe();
-
-      try {
-        this.props.userLogged(
-          {
-            email: authAnswer.data.data.email,
-            id: authAnswer.data.data.id,
-            login: authAnswer.data.data.login
-          },
-          authAnswer.data.resultCode
-        )
-      } catch (e) {
-
-      }
-    }
+    if (!this.props.isLogged) this.props.userLoggedThunk();
   }
 
   render() {
@@ -70,5 +50,5 @@ const mapStateToProps = state => {
 }
 
 export default connect(mapStateToProps, {
-  toggleHeaderHandler, userLogged
+  toggleHeaderHandler, userLoggedThunk
 })(Header);

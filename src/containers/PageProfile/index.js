@@ -1,27 +1,17 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { samuraiApi } from '@services/requests';
 import Profile from '@components/PageProfile/Profile';
-import { setUserProfile } from '@store/actions/profileAction';
+import { setUserProfileThunk } from '@store/actions/profileAction';
 
 class PageProfile extends React.Component {
   componentDidMount() {
-    this.profileFetch();
+    this.props.setUserProfileThunk(this.props.match.params.id);
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     if (this.props.match.params.id !== prevProps.match.params.id) {
-      this.profileFetch();
-    }
-  }
-
-  async profileFetch(id) {
-    try {
-      const users = await samuraiApi.getUser(this.props.match.params.id || 11598);
-      this.props.setUserProfile(users.data)
-    } catch (e) {
-
+      this.props.setUserProfileThunk(this.props.match.params.id)
     }
   }
 
@@ -42,6 +32,4 @@ const mapStateToProps = props => {
   }
 }
 
-export default connect(mapStateToProps, {
-  setUserProfile
-})(withRouter(PageProfile));
+export default connect(mapStateToProps, { setUserProfileThunk })(withRouter(PageProfile));
