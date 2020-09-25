@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { Redirect, withRouter } from 'react-router-dom';
 import Profile from '@components/PageProfile/Profile';
 import { setUserProfileThunk } from '@store/actions/profileAction';
 
@@ -16,6 +16,8 @@ class PageProfile extends React.Component {
   }
 
   render() {
+    if (!this.props.isLogged) return <Redirect to='/login' />
+
     return (
       <>
         <h1 className='page-title'>Page Profile</h1>
@@ -28,7 +30,8 @@ class PageProfile extends React.Component {
 
 const mapStateToProps = props => {
   return {
-    info: props.profileReducer
+    info: props.profileReducer,
+    isLogged: props.headerReducer.isLogged
   }
 }
 

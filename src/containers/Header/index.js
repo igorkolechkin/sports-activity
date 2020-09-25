@@ -10,7 +10,8 @@ import styles from './index.module.scss';
 
 class Header extends React.Component {
   componentDidMount() {
-    if (!this.props.isLogged) this.props.userLoggedThunk();
+    if (!this.props.isLogged)
+      this.props.userLoggedThunk();
   }
 
   render() {

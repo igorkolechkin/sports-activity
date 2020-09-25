@@ -5,24 +5,25 @@ import { samuraiApi } from '@services/requests';
 
 export const toggleHeaderHandler = () => ({ type: SHOW_HEADER });
 
-export const userLogged = (data, isLogged) => ({ type: USER_LOGGED, payload: { data, isLogged } });
+export const userLogged = data => ({ type: USER_LOGGED, payload: data });
 
 
 /* Thunks */
 
 export const userLoggedThunk = () => {
   return async dispatch => {
-    const authAnswer = await samuraiApi.authMe();
-
     try {
-      dispatch(userLogged(
-        {
-          email: authAnswer.data.data.email,
-          id: authAnswer.data.data.id,
-          login: authAnswer.data.data.login
-        },
-        authAnswer.data.resultCode
-      ))
+      const authAnswer = await samuraiApi.authMe();
+      const details = {
+        email: authAnswer.data.data.email,
+        id: authAnswer.data.data.id,
+        login: authAnswer.data.data.login
+      }
+
+      dispatch(userLogged(details));
+
+      localStorage.setItem('isLogged', '1');
+      localStorage.setItem('userDetails', JSON.stringify(details));
     } catch (e) {
 
     }

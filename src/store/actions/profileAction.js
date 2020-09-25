@@ -11,8 +11,8 @@ export const setUserProfile = profile => ({ type: SET_USER_PROFILE, payload: pro
 export const setUserProfileThunk = (id = 11598) => {
   return async dispatch => {
     try {
-      const users = await samuraiApi.getUser(id);
-      setUserProfile(users.data);
+      const user = await samuraiApi.getUser(id);
+      dispatch(setUserProfile(user.data));
     } catch (e) {
 
     }

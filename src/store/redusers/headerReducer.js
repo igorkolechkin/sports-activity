@@ -2,13 +2,13 @@ import { SHOW_HEADER, USER_LOGGED } from '@store/actions/actionTypes';
 
 const initialState = {
   isHeaderShow: false,
-  userDetails: null,
-  isLogged: false,
+  userDetails: JSON.parse(localStorage.getItem('userDetails')),
+  isLogged: localStorage.getItem('isLogged'),
   navigation: [
     {id: 0, content: 'Profile', href: '/profile', exact: true},
     {id: 1, content: 'Users', href: '/users', exact: false},
     {id: 2, content: 'Message', href: '/message', exact: false},
-    {id: 3, content: 'Activities', href: '/activities', exact: false},
+    {id: 3, content: 'Activities', href: '/login', exact: false},
   ]
 }
 
@@ -20,8 +20,7 @@ export default (state = initialState, action) => {
     case USER_LOGGED:
       return {
         ...state,
-        userDetails: { ...action.payload.data },
-        isLogged: !action.payload.isLogged
+        userDetails: action.payload
       };
 
     default:
