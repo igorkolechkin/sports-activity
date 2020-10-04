@@ -4,6 +4,8 @@ import UsersNav from '@components/PageMessage/UsersNav';
 import MessageArea from '@components/PageMessage/MessageArea';
 import { selectUserToMessage, writeNewMessage, addNewMessage } from '@store/actions/messageAction';
 import styles from './index.module.scss';
+import { compose } from 'redux';
+import isAuthRedirect from '@services/isAuthRadirect';
 
 const PageMessage = props => {
   return (
@@ -32,6 +34,9 @@ const mapStateToProps = props => {
   }
 }
 
-export default connect(mapStateToProps, {
-  selectUserToMessage, writeNewMessage, addNewMessage
-})(PageMessage);
+export default compose(
+  connect(mapStateToProps, {
+    selectUserToMessage, writeNewMessage, addNewMessage
+  }),
+  isAuthRedirect,
+)(PageMessage);

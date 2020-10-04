@@ -2,11 +2,12 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { setUsersThunk, setCurrentUsersPage, setUsersTotalCountThunk,
   toggleFollowUserThunk } from '@store/actions/usersAction';
-import { samuraiApi } from '@services/requests';
 import UsersList from '@components/PageUsers/UsersList';
 import Loader from '@components/UI/Loader';
 import Pagination from '@components/UI/Pagination';
 import styles from './index.module.scss';
+import { compose } from 'redux';
+import isAuthRedirect from '@services/isAuthRadirect';
 
 class PageFriends extends React.Component {
   componentDidMount() {
@@ -66,6 +67,9 @@ const mapStateToProps = props => {
   }
 }
 
-export default connect(mapStateToProps, {
-  setUsersThunk, setCurrentUsersPage, setUsersTotalCountThunk, toggleFollowUserThunk
-})(PageFriends);
+export default compose(
+  connect(mapStateToProps, {
+    setUsersThunk, setCurrentUsersPage, setUsersTotalCountThunk, toggleFollowUserThunk
+  }),
+  isAuthRedirect
+)(PageFriends)

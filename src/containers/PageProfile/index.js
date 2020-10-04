@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { Redirect, withRouter } from 'react-router-dom';
 import Profile from '@components/PageProfile/Profile';
 import { setUserProfileThunk } from '@store/actions/profileAction';
+import { compose } from 'redux';
+import isAuthRedirect from '@services/isAuthRadirect';
 
 class PageProfile extends React.Component {
   componentDidMount() {
@@ -35,4 +37,8 @@ const mapStateToProps = props => {
   }
 }
 
-export default connect(mapStateToProps, { setUserProfileThunk })(withRouter(PageProfile));
+export default compose(
+  connect(mapStateToProps, { setUserProfileThunk }),
+  withRouter,
+  isAuthRedirect,
+)(PageProfile)
