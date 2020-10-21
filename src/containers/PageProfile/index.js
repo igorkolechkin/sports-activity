@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Redirect, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import Profile from '@components/PageProfile/Profile';
 import { setUserProfileThunk } from '@store/actions/profileAction';
 import { compose } from 'redux';
@@ -18,11 +18,9 @@ class PageProfile extends React.Component {
   }
 
   render() {
-    if (!this.props.isLogged) return <Redirect to='/login' />
-
     return (
       <>
-        <h1 className='page-title'>Page Profile</h1>
+        <h1 className='page-title'>{ this.props.pageTitle }</h1>
 
         <Profile { ...this.props.info } />
       </>

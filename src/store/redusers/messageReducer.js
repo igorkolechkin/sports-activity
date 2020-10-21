@@ -1,8 +1,7 @@
-import { SELECT_USER_TO_MESSAGE, WRITE_NEW_MESSAGE, ADD_NEW_MESSAGE } from '@store/actions/actionTypes';
+import { SELECT_USER_TO_MESSAGE, ADD_NEW_MESSAGE } from '@store/actions/actionTypes';
 
 const initialState = {
   selectedUser: 0,
-  currentMessageText: '',
   users: [
     {
       id: 0,
@@ -48,20 +47,14 @@ export default (state = initialState, action) => {
     case SELECT_USER_TO_MESSAGE:
       return { ...state, selectedUser: parseInt(action.payload) }
 
-    case WRITE_NEW_MESSAGE:
-      return { ...state, currentMessageText: action.payload }
-
     case ADD_NEW_MESSAGE:
-      if (state.currentMessageText === '') return state;
-      else {
-        const updateUserObject = JSON.parse(JSON.stringify(state.users[state.selectedUser]));
-        updateUserObject.message.push({ isMy: true, text: state.currentMessageText });
+      const updateUserObject = JSON.parse(JSON.stringify(state.users[state.selectedUser]));
+      updateUserObject.message.push({ isMy: true, text: action.payload });
 
-        const newUsers = [...state.users]
-        newUsers.splice(state.getSelectedUserIndex(),1,updateUserObject)
+      const newUsers = [...state.users];
+      newUsers.splice(state.getSelectedUserIndex(),1,updateUserObject);
 
-        return { ...state, users: newUsers, currentMessageText: '' }
-      }
+      return { ...state, users: newUsers }
 
     default:
       return state;

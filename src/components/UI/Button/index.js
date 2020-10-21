@@ -2,12 +2,14 @@ import React from 'react';
 import styles from './index.module.scss';
 
 const Button = props => {
+  const { className, onClick, ...attrs } = props;
 
   return (
     <button
-      className={ [ styles.btn, props.classes ].join(' ') }
-      onClick={ props.onClick }
-      disabled={ props.disabled } >
+      className={ [ styles.btn, className ].join(' ') }
+      onClick={ onClick }
+      { ...attrs }
+    >
       { props.children }
     </button>
   )

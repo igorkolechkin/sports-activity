@@ -8,7 +8,6 @@ const MessageArea = props => {
     <div className={ styles.area }>
       <ChatViews selectedMessage={ props.selectedMessage } />
       <Controls currentMessageText={ props.currentMessageText }
-                writeNewMessage={ props.writeNewMessage }
                 addNewMessage={ props.addNewMessage }/>
     </div>
   )

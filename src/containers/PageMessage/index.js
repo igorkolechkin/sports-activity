@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import UsersNav from '@components/PageMessage/UsersNav';
 import MessageArea from '@components/PageMessage/MessageArea';
-import { selectUserToMessage, writeNewMessage, addNewMessage } from '@store/actions/messageAction';
+import { selectUserToMessage, addNewMessage } from '@store/actions/messageAction';
 import styles from './index.module.scss';
 import { compose } from 'redux';
 import isAuthRedirect from '@services/isAuthRadirect';
@@ -17,7 +17,6 @@ const PageMessage = props => {
                   onCheckUser={ props.selectUserToMessage } />
         <MessageArea selectedMessage={ props.selectedMessage.message }
                      currentMessageText={ props.currentMessageText }
-                     writeNewMessage={ props.writeNewMessage }
                      addNewMessage={ props.addNewMessage } />
       </div>
     </>
@@ -36,7 +35,7 @@ const mapStateToProps = props => {
 
 export default compose(
   connect(mapStateToProps, {
-    selectUserToMessage, writeNewMessage, addNewMessage
+    selectUserToMessage, addNewMessage
   }),
   isAuthRedirect,
 )(PageMessage);

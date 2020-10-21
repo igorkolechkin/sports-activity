@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { setUsersThunk, setCurrentUsersPage, setUsersTotalCountThunk,
-  toggleFollowUserThunk } from '@store/actions/usersAction';
+import { setUsersFetch, setCurrentUsersPage, toggleFollowUserThunk } from '@store/actions/usersAction';
 import UsersList from '@components/PageUsers/UsersList';
 import Loader from '@components/UI/Loader';
 import Pagination from '@components/UI/Pagination';
@@ -11,15 +10,14 @@ import isAuthRedirect from '@services/isAuthRadirect';
 
 class PageFriends extends React.Component {
   componentDidMount() {
-    this.props.setUsersTotalCountThunk();
-    this.props.setUsersThunk(this.props.usersCount)
+    this.props.dispatch(setUsersFetch());
   }
 
   paginationItemHandler = item => {
     const currentPage = parseInt(item.innerText);
 
     this.props.setCurrentUsersPage(currentPage);
-    this.props.setUsersThunk(this.props.usersCount, currentPage);
+    this.props.dispatch(setUsersFetch(this.props.usersCount, currentPage));
   }
 
   renderPagination() {
@@ -69,7 +67,7 @@ const mapStateToProps = props => {
 
 export default compose(
   connect(mapStateToProps, {
-    setUsersThunk, setCurrentUsersPage, setUsersTotalCountThunk, toggleFollowUserThunk
+    setCurrentUsersPage, toggleFollowUserThunk
   }),
   isAuthRedirect
 )(PageFriends)

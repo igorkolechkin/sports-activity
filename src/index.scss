@@ -39,3 +39,34 @@ ul {
 .img-fluid {
   max-width: 100%;
 }
+
+.form-group {
+  margin-bottom: 30px;
+  position: relative;
+}
+
+.form-input {
+  width: 100%;
+  padding: 0 15px;
+  height: 30px;
+  border: 1px solid #333333;
+  border-radius: 5px;
+
+  &.success {
+    border-color: #c0c029;
+  }
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+.warning-notice {
+  position: absolute;
+  top: 100%;
+  margin-top: 3px;
+  font-size: 14px;
+  color: red;
+}

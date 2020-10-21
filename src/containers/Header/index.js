@@ -9,7 +9,9 @@ import Button from '@components/UI/Button';
 import styles from './index.module.scss';
 
 class Header extends React.Component {
-  componentDidMount() {
+  constructor(props) {
+    super(props);
+
     if (!this.props.isLogged)
       this.props.userLoggedThunk();
   }

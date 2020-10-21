@@ -1,14 +1,11 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { createStore, applyMiddleware } from 'redux';
-import reduxThunk from 'redux-thunk';
 import { BrowserRouter } from 'react-router-dom';
-
-import rootReducer from '@store/redusers';
+import configureStore from '@store/store';
 import Header from '@containers/Header';
 import MainContent from '@containers/MainContent';
 
-const store = createStore(rootReducer, applyMiddleware(reduxThunk));
+const store = configureStore()
 
 function App() {
   return (
